@@ -8,11 +8,15 @@ deployment:
   acceptance:
     branch: development
     commands:
-      - ./bin/deploy.sh mywater-acceptance:
-          timeout: 360
+      - '[[ ! -s "$(git rev-parse --git-dir)/shallow" ]] || git fetch --unshallow'
+      - git push -f git@heroku.com:mywater-acceptance.git $CIRCLE_SHA1:master:
+          timeout: 300
+      - heroku run rake db:migrate db:seed --app mywater-acceptance
 
   production:
-    branch: master 
+    branch: master
     commands:
-      - ./bin/deploy.sh mywater:
-          timeout: 360
+      - '[[ ! -s "$(git rev-parse --git-dir)/shallow" ]] || git fetch --unshallow'
+      - git push -f git@heroku.com:mywater.git $CIRCLE_SHA1:master:
+          timeout: 300
+      - heroku run rake db:migrate db:seed --app mywater
