@@ -13,3 +13,15 @@ javascript:
   // Califonia Lat/Long
   var california = [37, -120];
   var map = L.mapbox.map('map', 'carbon5.k10f7deo').setView(california, 6);
+
+  var featureLayer = L.mapbox.featureLayer()
+    .loadURL('/reservoir')
+    .on('ready', function(event) {
+      var geojson = event.target._geojson;
+      L.geoJson(geojson, {
+        pointToLayer: function(feature, latlng) {
+          return L.circleMarker(latlng);
+        }
+      })
+      .addTo(map);
+    })
