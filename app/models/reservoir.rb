@@ -9,4 +9,6 @@ class Reservoir < ActiveRecord::Base
   validates :latitude, presence: true, format: { with: LAT_LONG_REGEX }
   validates :longitude, presence: true, format: { with: LAT_LONG_REGEX }
 
+  belongs_to :water_system
+
 end
