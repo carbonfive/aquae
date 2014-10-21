@@ -1,7 +1,13 @@
-.jumbotron
-  h1 Water Systems of California
-  br
-  p Welcome to your newly generated rails application...
-  p Meander around the code to see what's been done for you. Many small, and a few not-so-small, customizations have been made.
-  p Custom generator templates create views that are bootstrap compatible and specs that are factory-aware and follow best practices.
-  p Your application is ready for easy deployment to heroku.
+= javascript_include_tag 'https://api.tiles.mapbox.com/mapbox.js/v2.1.3/mapbox.js'
+= javascript_include_tag 'https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.2.0/leaflet-omnivore.min.js'
+= stylesheet_link_tag 'https://api.tiles.mapbox.com/mapbox.js/v2.1.3/mapbox.css'
+
+css:
+  body { margin:0; padding:0; }
+  #map { position:absolute; top:0; bottom:0; width:100%; }
+
+div id="map"
+
+javascript:
+  L.mapbox.accessToken = 'pk.eyJ1IjoiY2FyYm9uNSIsImEiOiJ6aV9uakxJIn0.ukQnv3tUrxQNlLb2KvktHw';
+  var map = L.mapbox.map('map', 'carbon5.k10f7deo');
