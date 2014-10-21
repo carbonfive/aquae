@@ -14,3 +14,10 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require_tree .
+
+$(document).ready(function() {
+  $('.js-toggle-water-system-detail').on('click', function(e) {
+    e.preventDefault();
+    $('#water-system-detail').toggleClass('visible');
+  });
+});

@@ -8,6 +8,14 @@ html
     meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'
 
   body id=(controller.controller_name) class=(controller.action_name)
+    .wrapper
+      nav.navbar.navbar-default.navbar-fixed-top.navbar-inverse
+        .container
+          .navbar-header
+            .navbar-brand Water Systems of California
+          ul.nav.navbar-nav.navbar-right
+            li
+              a.js-toggle-water-system-detail Toggle Detail
     - flash.each do |name, msg|
       .alert.alert-dismissable class=alert_class(name)
         button.close type='button' data-dismiss='alert' aria-hidden='true' &times;

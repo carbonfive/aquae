@@ -5,3 +5,11 @@ body { padding-top: 70px; }
 .nav a .glyphicon, form button.btn .glyphicon {
   padding-right: .2rem;
 }
+
+.navbar-fixed-top {
+    box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.2);
+}
+
+#map {
+  margin-top: 50px;
+}
