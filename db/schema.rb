@@ -11,9 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20141021202343) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "reservoirs", force: true do |t|
+    t.string   "name"
+    t.string   "code"
+    t.integer  "capacity"
+    t.integer  "current_supply"
+    t.string   "latitude"
+    t.string   "longitude"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
 
 end
