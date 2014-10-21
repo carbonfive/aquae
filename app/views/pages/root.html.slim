@@ -10,4 +10,6 @@ div id="map"
 
 javascript:
   L.mapbox.accessToken = 'pk.eyJ1IjoiY2FyYm9uNSIsImEiOiJ6aV9uakxJIn0.ukQnv3tUrxQNlLb2KvktHw';
-  var map = L.mapbox.map('map', 'carbon5.k10f7deo');
+  // Califonia Lat/Long
+  var california = [37, -120];
+  var map = L.mapbox.map('map', 'carbon5.k10f7deo').setView(california, 6);
