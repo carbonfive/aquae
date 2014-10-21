@@ -2,10 +2,13 @@
 # Use 'createuser -s postgres' to create a general purpose db (super)user.
 
 development: &default
-  adapter: postgresql
+  adapter: postgis
   encoding: unicode
+  postgis_extension:  postgis
+  #schema_search_path: public, postgis
+
   database: mywater_development
-  username: postgres
+  username: gmas
   pool: 5
   timeout: 5000
 
