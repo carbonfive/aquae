@@ -10,8 +10,6 @@
 # Data that is required by the application across all environments (i.e. reference data) should _not_ be included here.
 # That belongs in seeds.rb instead.
 
-WaterSystem.create! name: 'EBMUD'
-
 Reservoir.find_or_create_by!(code: 'PAR') do |r|
   r.name = 'Pardee'
   r.capacity = 197_950
@@ -58,4 +56,8 @@ Reservoir.find_or_create_by!(code: 'SPB') do |r|
   r.current_supply = 27_420
   r.latitude = '37.958000'
   r.longitude = '-122.333000'
+end
+
+WaterSystem.create!(name: 'EBMUD').tap do |ws|
+  ws.reservoirs << Reservoir.where(code: %w(PAR CMN BIO CHB LFY SPB))
 end
