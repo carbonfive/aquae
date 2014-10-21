@@ -5,11 +5,11 @@ ruby '2.1.3'
 
 gem 'unicorn'
 gem 'rack-canonical-host'
-gem 'rails', '~> 4.2.0.beta2'
+gem 'rails', '~> 4.1.6'
 gem 'pg'
 
 gem 'slim-rails'
-gem 'sass-rails', '~> 5.0.0.beta1'                     # Rails 4.2 support
+gem 'sass-rails'#, '~> 5.0.0.beta1'                     # Rails 4.2 support
 gem 'bootstrap-sass'
 gem 'jquery-rails'
 gem 'coffee-rails'
@@ -17,6 +17,9 @@ gem 'simple_form', '~> 3.1.0.rc2'                      # Bootstrap 3 support
 gem 'uglifier'
 
 gem 'awesome_print'
+gem 'activerecord-postgis-adapter'
+gem 'rgeo-geojson'
+
 
 group :production, :acceptance do
   gem 'rails_stdout_logging'
