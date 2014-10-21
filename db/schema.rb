@@ -11,9 +11,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20141021203212) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "reservoirs", force: true do |t|
+    t.string   "name"
+    t.string   "code"
+    t.integer  "capacity"
+    t.integer  "current_supply"
+    t.string   "latitude"
+    t.string   "longitude"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.integer  "water_system_id"
+  end
+
+  add_index "reservoirs", ["water_system_id"], name: "index_reservoirs_on_water_system_id", using: :btree
+
+  create_table "water_systems", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "reservoirs", "water_systems"
 end
