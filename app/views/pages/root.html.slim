@@ -32,7 +32,6 @@ javascript:
   });
 
   $(".dropdown-menu li a").click(function(event){
-    console.log(event.currentTarget.text);
     featureLayer.setFilter(function(feat) {
       if (event.currentTarget.text === 'California') {
         return true;
