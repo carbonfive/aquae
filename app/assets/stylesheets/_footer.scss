@@ -18,10 +18,10 @@ footer {
   height: $footer-height;
   line-height: $footer-height;
 
-  border-top: 1px solid $gray-lighter;
+  border-top: 1px solid $base-color;
 
   p {
     margin: 0;
-    color: $gray-light;
+    color: $base-color;
   }
 }
