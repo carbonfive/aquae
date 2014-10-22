@@ -16,14 +16,12 @@
 //= require c3
 //= require_tree .
 
-var toggleWaterSystemDetail = function() {
-  $('#water-system-detail').toggleClass('visible');
-
-  var reservoirSummaryChart = c3.generate({
+var generateWSSummaryChart = function(currentSupplyPercentage) {
+  c3.generate({
     bindto: '#reservoir-summary-chart',
     data: {
       columns: [
-        ['Current Supply', 30.0]
+        ['Current Supply', currentSupplyPercentage]
       ],
       type: 'gauge'
     },
@@ -42,7 +40,15 @@ var toggleWaterSystemDetail = function() {
       }
     }
   });
-}
+};
+
+var toggleWaterSystemDetail = function() {
+  $('#water-system-detail').toggleClass('visible');
+
+  var waterSystemXhr = $.ajax('/water_system/1').done(function(waterSystem) {
+    generateWSSummaryChart(waterSystem.current_supply_percentage);
+  })
+};
 
 $(document).ready(function() {
   $('.js-toggle-water-system-detail').on('click', function(e) {
