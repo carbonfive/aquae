@@ -19,6 +19,20 @@ html
           ul.nav.navbar-nav.navbar-right
             li
               a.js-toggle-water-system-detail Toggle Detail
+            li.dropdown
+              a.dropdown-toggle data-toggle="dropdown"  
+                | Water Systems
+                span.caret
+              ul.dropdown-menu role="menu"
+                li
+                  a California
+                li.divider
+                - WaterSystem.all.each do |ws|
+                  | <li><a>#{ws.name}</a></li>
+
+
+
+
     - flash.each do |name, msg|
       .alert.alert-dismissable class=alert_class(name)
         button.close type='button' data-dismiss='alert' aria-hidden='true' &times;
