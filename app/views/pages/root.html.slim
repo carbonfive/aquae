@@ -35,11 +35,13 @@ javascript:
   });
 
   $(".dropdown-menu li a").click(function(event){
+    var filter;
     if (event.currentTarget.text === 'California') {
-      featureLayer.setFilter(function() { return true; });
+      filter = function() { return true; };
       centerOnCalifornia();
     } else {
-      featureLayer.setFilter(function(feature) { return feature.properties.water_system === event.currentTarget.text; });
+      filter = function(feature) { return feature.properties.water_system === event.currentTarget.text; };
       map.fitBounds(featureLayer.getBounds());
     }
+    featureLayer.setFilter(filter);
   })
