@@ -43,17 +43,41 @@ var generateWSSummaryChart = function(currentSupplyPercentage) {
   });
 };
 
+var generateWSDetailChart = function(chartData) {
+  c3.generate({
+    bindto: '#water-system-detail__reservoirs-chart',
+    data: {
+      columns: chartData,
+      type: 'bar'
+    },
+    tooltip: { show: false },
+    axis: {
+      rotated: true,
+      x: {
+        show: false
+      }
+    },
+    color: {
+      pattern: ['#718AA5', '#7FAD78']
+    },
+    legend: {
+      show: false
+    }
+  })
+};
+
 var renderWSTemplate = function(waterSystem) {
   var source = $('#water-system-detail-template').html();
   var template = Handlebars.compile(source);
   var html = template(waterSystem);
   $('#water-system-detail').html(html);
-}
+};
 
 var toggleWaterSystemDetail = function() {
   var waterSystemXhr = $.ajax('/water_system/1').done(function(waterSystem) {
     renderWSTemplate(waterSystem)
     generateWSSummaryChart(waterSystem.current_supply_percentage);
+    generateWSDetailChart(waterSystem.reservoir_chart_data);
     $('#water-system-detail').toggleClass('visible');
   })
 };

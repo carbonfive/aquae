@@ -15,14 +15,31 @@ script id="water-system-detail-template" type="text/x-handlebars-template"
   .water-system-detail__divider
   h2.water-system-detail__description
     | Below is a list of water sources that {{name}}’s water comes from and their overall network supply.
-  .reservoirs
-    p.reservoir Pardee
-    p.reservoir Camanche
+
+  h2
+    | Water Sources in {{name}}’s Network
+  p
+    | {{name}}’s water comes from the {{reservoir_names}} water sources. This chart shows each water source’s current supply vs. it’s full potential capacity.
+  #water-system-detail__reservoirs-chart.water-system-detail__reservoirs-chart
+  .water-system-detail__legend
+    .water-system-summary__legend-color-wrapper
+      .water-system-summary__legend-color.normal
+    .water-system-summary__legend-label
+      | current supply
+      br
+      | available
+    .water-system-summary__legend-color-wrapper
+      .water-system-summary__legend-color.good
+    .water-system-summary__legend-label
+      | full potential
+      br
+      | capacity
+
 
   .water-system-summary
     h2.water-system-summary__header
       | {{name}}’s Current Water Supply
-    .water-system-summary__description
+    p.water-system-summary__description
       | {{name}} currently has {{current_supply_percentage}}% of its total potential capacity available. This means {{name}}’s water network is in {{health}} health.
     #water-system-summary__chart.water-system-summary__chart
     .water-system-summary__legend

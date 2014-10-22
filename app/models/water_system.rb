@@ -14,6 +14,17 @@ class WaterSystem < ActiveRecord::Base
     ((current_supply.to_f / capacity.to_f) * 100.0).to_i
   end
 
+  def reservoir_names
+    reservoirs.pluck(:name).to_sentence
+  end
+
+  def reservoir_chart_data
+    [
+      ['current supply available', *reservoirs.pluck(:current_supply)],
+      ['full potential capacity', *reservoirs.pluck(:capacity)]
+    ]
+  end
+
   def health
     case current_supply_percentage
     when 0..20 then 'dire'
