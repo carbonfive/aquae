@@ -4,6 +4,15 @@
 css:
   body { margin:0; padding:0; }
   #map { position:absolute; top:0; bottom:0; width:100%; }
+  .reservoir-icon {
+    background:#ff8888;
+    border:5px solid rgba(255,255,255,0.5);
+    color:#fff;
+    font-weight:bold;
+    text-align:center;
+    border-radius:50%;
+    line-height:60px;
+  }
 
 div#map
 
@@ -32,6 +41,9 @@ javascript:
 
   featureLayer.on('layeradd', function(event) {
     event.layer.bindPopup(event.layer.feature.properties.name);
+    //event.layer.setIcon(L.icon({iconUrl: 'https://www.lawrenceks.org/assets/art/water.png',iconSize: [20, 20],}));
+    event.layer.setIcon(L.divIcon({className: 'reservoir-icon', iconSize: [20, 20]}));
+    event.layer.setOpacity(0.8);
   });
 
   $(".dropdown-menu li a").click(function(event){
