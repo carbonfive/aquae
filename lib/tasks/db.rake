@@ -28,9 +28,24 @@ namespace :db do
       end
 
       # reservoirs = [
-      #   { code: 'SHA', name: '', capacity: 500_000 },
-      #   { code: 'PAR', name: '', capacity: 500_000 },
+      #   { code: 'SHA', name: 'Shasta', capacity: 500_000 },
+      #   { code: 'PAR', name: 'Pardee', capacity: 500_000 },
       # ]
+
+      puts '--------------------------------'
+
+      reservoirs.each do |reservoir_data|
+        next if Reservoir.where(code: reservoir_data[:code], latlon: nil).empty?
+
+        doc = Nokogiri::HTML(open("http://cdec.water.ca.gov/cgi-progs/stationInfo?station_id=#{reservoir_data[:code]}"))
+
+        begin
+          reservoir_data[:longitude] = doc.at_css('table:first tr:nth(4) td:nth(4)').text.strip[0..-3]
+          reservoir_data[:latitude]  = doc.at_css('table:first tr:nth(4) td:nth(2)').text.strip[0..-3]
+          puts "#{reservoir_data[:code]} - LON #{reservoir_data[:longitude]} / LAT #{reservoir_data[:latitude]}"
+        rescue
+        end
+      end
 
       puts '--------------------------------'
 
@@ -95,15 +110,15 @@ namespace :db do
 
         reservoir_data[:captured_on] = date_recorded
         reservoir_data[:current_supply] = supply
-        reservoirs << reservoir_data
 
         puts "#{reservoir_data[:code]} - #{supply} / #{reservoir_data[:capacity]} - #{reservoir_data[:captured_on]}"
 
         r = Reservoir.find_or_initialize_by(code: reservoir_data[:code])
         r.name                       = reservoir_data[:name]
+        r.latlon                     = "POINT(#{reservoir_data[:longitude]} #{reservoir_data[:latitude]})"
         r.capacity                   = reservoir_data[:capacity]
         r.current_supply             = reservoir_data[:current_supply].present? ? reservoir_data[:current_supply] : nil
-        r.current_supply_captured_on = reservoir_data[:captured_on].present? ? Date.strptime(reservoir_data[:captured_on], "%m/%d/%Y") : nil
+        r.current_supply_captured_on = reservoir_data[:captured_on].present? ? Date.strptime(reservoir_data[:captured_on], '%m/%d/%Y') : nil
         r.save!
       end
     end
