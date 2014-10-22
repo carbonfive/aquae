@@ -1,3 +1,4 @@
+= javascript_include_tag "http://d3js.org/d3.v3.min.js"
 = javascript_include_tag 'https://api.tiles.mapbox.com/mapbox.js/v2.1.3/mapbox.js'
 = javascript_include_tag 'https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.2.0/leaflet-omnivore.min.js'
 = stylesheet_link_tag 'https://api.tiles.mapbox.com/mapbox.js/v2.1.3/mapbox.css'
@@ -9,14 +10,16 @@ css:
 div#map
 
 div#water-system-detail
-  h2.water-system-description Where Alameda gets its water from
+  h1.water-system-description Alameda
+  h2.water-system-description-subtext This is where Alameda gets its water from:
   .reservoirs
-    .reservoir Pardee
-    .reservoir Camanche
+    p.reservoir Pardee
+    p.reservoir Camanche
 
   .reservoirs-summary
     h3.reservoirs-summary-header Overall Current Supply
-    .reservoir-summary-chart
+    #reservoir-summary-chart
+
 
 
 javascript:

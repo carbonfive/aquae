@@ -20,7 +20,6 @@ gem 'awesome_print'
 gem 'activerecord-postgis-adapter'
 gem 'rgeo-geojson'
 
-
 group :production, :acceptance do
   gem 'rails_stdout_logging'
   gem 'heroku_rails_deflate'

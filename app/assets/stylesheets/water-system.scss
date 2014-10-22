@@ -16,9 +16,11 @@ html, body {
   transition-property: all;
   transition-duration: 0.6s;
   transition-timing-function: cubic-bezier(0, 1, 0.6, 1);
-  box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 12px 5px rgba(0, 0, 0, 0.1);
 }
 
 #water-system-detail.visible {
   right: 0;
 }
+
+.water-system-description-subtext { font-weight: normal; }
