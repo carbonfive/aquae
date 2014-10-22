@@ -73,14 +73,19 @@ var renderWSTemplate = function(waterSystem) {
   $('#water-system-detail').html(html);
 };
 
-var toggleWaterSystemDetail = function() {
-  var waterSystemXhr = $.ajax('/water_system/1').done(function(waterSystem) {
+var showWaterSystemDetail = function(waterSystemId) {
+  var path = '/water_system/' + waterSystemId
+  var waterSystemXhr = $.ajax(path).done(function(waterSystem) {
     renderWSTemplate(waterSystem)
     generateWSSummaryChart(waterSystem.current_supply_percentage);
     generateWSDetailChart(waterSystem.reservoir_chart_data);
-    $('#water-system-detail').toggleClass('visible');
+    $('#water-system-detail').addClass('visible');
   })
 };
+
+var hideWaterSystemDetail = function() {
+  $('#water-system-detail').removeClass('visible');
+}
 
 $(document).ready(function() {
   $('.js-toggle-water-system-detail').on('click', function(e) {
