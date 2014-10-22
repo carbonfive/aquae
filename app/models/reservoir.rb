@@ -1,6 +1,6 @@
 class Reservoir < ActiveRecord::Base
 
-  validates :name, presence: true, uniqueness: true
+  validates :name, presence: true
   validates :code, presence: true, uniqueness: true
   validates :capacity, presence: true, numericality: { greater_than: 0 }
   validates :current_supply, numericality: { greater_than_or_equal_to: 0 }
