@@ -73,8 +73,8 @@ var renderWSTemplate = function(waterSystem) {
   $('#water-system-detail').html(html);
 };
 
-var showWaterSystemDetail = function(waterSystemId) {
-  var path = '/water_system/' + waterSystemId
+var showWaterSystemDetail = function(waterSystemName) {
+  var path = '/water_system/' + waterSystemName
   var waterSystemXhr = $.ajax(path).done(function(waterSystem) {
     renderWSTemplate(waterSystem)
     generateWSSummaryChart(waterSystem.current_supply_percentage);

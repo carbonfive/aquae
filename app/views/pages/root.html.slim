@@ -156,11 +156,11 @@ javascript:
     if (event.currentTarget.text === 'California') {
       filter = function() { return true; };
       centerOnCalifornia();
-      $('#water-system-detail').removeClass('visible');
+      hideWaterSystemDetail();
     } else {
       filter = function(feature) { return feature.properties.water_system === event.currentTarget.text; };
       map.fitBounds(featureLayer.getBounds());
-      $('#water-system-detail').addClass('visible');
+      showWaterSystemDetail(event.currentTarget.text);
     }
     featureLayer.setFilter(filter);
   })
