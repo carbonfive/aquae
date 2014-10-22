@@ -10,6 +10,19 @@ body { padding-top: 70px; }
   box-shadow: 0 0 12px 5px rgba(0, 0, 0, 0.2);
 }
 
+.navbar {
+  background-color: #4D5D73;
+  border-color: #4D5D73;
+}
+
+.navbar-brand {
+  padding: 5px 0 0 0;
+}
+
+.navbar-logo {
+  height: 40px;
+}
+
 #map {
   margin-top: 50px;
 }
