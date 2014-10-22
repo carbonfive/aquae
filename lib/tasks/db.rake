@@ -119,7 +119,11 @@ namespace :db do
         r.capacity                   = reservoir_data[:capacity]
         r.current_supply             = reservoir_data[:current_supply].present? ? reservoir_data[:current_supply] : nil
         r.current_supply_captured_on = reservoir_data[:captured_on].present? ? Date.strptime(reservoir_data[:captured_on], '%m/%d/%Y') : nil
-        r.save!
+        r.save
+
+        unless r.valid?
+          puts "#{reservoir_data[:code]} - Error: #{r.errors.full_messages.join(', ')}"
+        end
       end
     end
   end
