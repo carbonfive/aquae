@@ -27,6 +27,9 @@ javascript:
   var featureLayer = L.mapbox.featureLayer('/reservoir')
   .addTo(map);
 
+  featureLayer.on('layeradd', function(event) {
+    event.layer.bindPopup(event.layer.feature.properties.name);
+  });
 
   $(".dropdown-menu li a").click(function(event){
     console.log(event.currentTarget.text);
