@@ -24,14 +24,17 @@ javascript:
   var california = [37, -120];
   var map = L.mapbox.map('map', 'carbon5.k10f7deo').setView(california, 6);
 
-  var featureLayer = L.mapbox.featureLayer()
-    .loadURL('/reservoir')
-    .on('ready', function(event) {
-      var geojson = event.target._geojson;
-      L.geoJson(geojson, {
-        pointToLayer: function(feature, latlng) {
-          return L.circleMarker(latlng).bindPopup(feature.properties.name);
-        }
-      })
-      .addTo(map);
+  var featureLayer = L.mapbox.featureLayer('/reservoir')
+  .addTo(map);
+
+
+  $(".dropdown-menu li a").click(function(event){
+    console.log(event.currentTarget.text);
+    featureLayer.setFilter(function(feat) {
+      if (event.currentTarget.text === 'California') {
+        return true;
+      } else {
+        return feat.properties.water_system == event.currentTarget.text;
+      }
     })
+  })
