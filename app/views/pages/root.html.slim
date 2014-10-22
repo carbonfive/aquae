@@ -20,9 +20,12 @@ div#water-system-detail
 
 javascript:
   L.mapbox.accessToken = 'pk.eyJ1IjoiY2FyYm9uNSIsImEiOiJ6aV9uakxJIn0.ukQnv3tUrxQNlLb2KvktHw';
-  // Califonia Lat/Long
-  var california = [37, -120];
-  var map = L.mapbox.map('map', 'carbon5.k10f7deo').setView(california, 6);
+
+  var map = L.mapbox.map('map', 'carbon5.k10f7deo');
+  function centerOnCalifornia() {
+    map.setView([37, -120], 6);
+  }
+  centerOnCalifornia();
 
   var featureLayer = L.mapbox.featureLayer('/reservoir')
   .addTo(map);
@@ -32,11 +35,11 @@ javascript:
   });
 
   $(".dropdown-menu li a").click(function(event){
-    featureLayer.setFilter(function(feat) {
-      if (event.currentTarget.text === 'California') {
-        return true;
-      } else {
-        return feat.properties.water_system == event.currentTarget.text;
-      }
-    })
+    if (event.currentTarget.text === 'California') {
+      featureLayer.setFilter(function() { return true; });
+      centerOnCalifornia();
+    } else {
+      featureLayer.setFilter(function(feature) { return feature.properties.water_system === event.currentTarget.text; });
+      map.fitBounds(featureLayer.getBounds());
+    }
   })
