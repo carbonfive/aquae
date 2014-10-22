@@ -264,6 +264,7 @@ DEPENDENCIES
   heroku_rails_deflate
   jquery-rails
   launchy
+  nokogiri
   pg
   poltergeist
   quiet_assets
