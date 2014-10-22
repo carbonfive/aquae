@@ -7,18 +7,55 @@ css:
   #map { position:absolute; top:0; bottom:0; width:100%; }
 
 div#map
-
 div#water-system-detail
-  h1.water-system-description Alameda
-  h2.water-system-description-subtext This is where Alameda gets its water from:
+
+script id="water-system-detail-template" type="text/x-handlebars-template"
+  h1.water-system-detail__name
+    | {{name}} Gets Its Water From
+  .water-system-detail__divider
+  h2.water-system-detail__description
+    | Below is a list of water sources that {{name}}’s water comes from and their overall network supply.
   .reservoirs
     p.reservoir Pardee
     p.reservoir Camanche
 
-  .reservoirs-summary
-    h3.reservoirs-summary-header Overall Current Supply
-    #reservoir-summary-chart
-
+  .water-system-summary
+    h2.water-system-summary__header
+      | {{name}}’s Current Water Supply
+    .water-system-summary__description
+      | {{name}} currently has {{current_supply_percentage}}% of its total potential capacity available. This means {{name}}’s water network is in {{health}} health.
+    #water-system-summary__chart.water-system-summary__chart
+    .water-system-summary__legend
+      .water-system-summary__legend-color-wrapper
+        .water-system-summary__legend-color.dire
+      .water-system-summary__legend-label
+        | Dire
+        br
+        | 0-20%
+      .water-system-summary__legend-color-wrapper
+        .water-system-summary__legend-color.low
+      .water-system-summary__legend-label
+        | Low
+        br
+        | 21-40%
+      .water-system-summary__legend-color-wrapper
+        .water-system-summary__legend-color.normal
+      .water-system-summary__legend-label
+        | Normal
+        br
+        | 41-60%
+      .water-system-summary__legend-color-wrapper
+        .water-system-summary__legend-color.good
+      .water-system-summary__legend-label
+        | Good
+        br
+        | 61-80%
+      .water-system-summary__legend-color-wrapper
+        .water-system-summary__legend-color.high
+      .water-system-summary__legend-label
+        | High
+        br
+        | 81-100%
 
 
 javascript:

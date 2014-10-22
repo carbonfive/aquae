@@ -13,12 +13,13 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap
+//= require handlebars-v2.0.0
 //= require c3
 //= require_tree .
 
 var generateWSSummaryChart = function(currentSupplyPercentage) {
   c3.generate({
-    bindto: '#reservoir-summary-chart',
+    bindto: '#water-system-summary__chart',
     data: {
       columns: [
         ['Current Supply', currentSupplyPercentage]
@@ -42,11 +43,18 @@ var generateWSSummaryChart = function(currentSupplyPercentage) {
   });
 };
 
-var toggleWaterSystemDetail = function() {
-  $('#water-system-detail').toggleClass('visible');
+var renderWSTemplate = function(waterSystem) {
+  var source = $('#water-system-detail-template').html();
+  var template = Handlebars.compile(source);
+  var html = template(waterSystem);
+  $('#water-system-detail').html(html);
+}
 
+var toggleWaterSystemDetail = function() {
   var waterSystemXhr = $.ajax('/water_system/1').done(function(waterSystem) {
+    renderWSTemplate(waterSystem)
     generateWSSummaryChart(waterSystem.current_supply_percentage);
+    $('#water-system-detail').toggleClass('visible');
   })
 };
 

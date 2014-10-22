@@ -7,8 +7,8 @@ html, body {
   position: absolute;
   padding: 70px 20px 20px 20px;
   top: 0;
-  right: -415px; /* width plus box-shadow */
-  width: 400px;
+  right: -555px; /* width plus box-shadow */
+  width: 540px;
   height: 100%;
   overflow-y: scroll;
   background: white;
@@ -23,4 +23,38 @@ html, body {
   right: 0;
 }
 
-.water-system-description-subtext { font-weight: normal; }
+.water-system-detail__divider {
+  border: 0;
+  height: 1px;
+  background-color: rgba($base-color, 0.4);
+  width: 100px;
+}
+
+.water-system-detail__description { font-weight: normal; }
+.water-system-summary__chart { margin-top: 20px; }
+.water-system-summary__legend {
+  margin-top: -120px;
+  display:flex;
+}
+ 
+.water-system-summary__legend-color {
+  box-sizing: border-box;
+  background: #CCC;
+  width: 38px;
+  height: 38px;
+  margin: 0 auto;
+}
+
+.water-system-summary__legend-color-wrapper, .water-system-summary__legend-label {
+  flex-grow: 1;
+}
+.water-system-summary__legend-label {
+  padding-left: 2px;
+  padding-right: 4px;
+}
+
+.dire { background: $dire-color }
+.low { background: $low-color }
+.normal { background: $normal-color }
+.good { background: $good-color }
+.high { background: $high-color }
