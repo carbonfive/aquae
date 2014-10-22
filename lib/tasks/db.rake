@@ -35,7 +35,7 @@ namespace :db do
       puts '--------------------------------'
 
       reservoirs.each do |reservoir_data|
-        next if Reservoir.where(code: reservoir_data[:code], latlon: nil).empty?
+        next if Reservoir.where(code: reservoir_data[:code]).exists? && Reservoir.where(code: reservoir_data[:code], latlon: nil).empty?
 
         doc = Nokogiri::HTML(open("http://cdec.water.ca.gov/cgi-progs/stationInfo?station_id=#{reservoir_data[:code]}"))
 
