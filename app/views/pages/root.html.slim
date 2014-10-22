@@ -28,7 +28,7 @@ javascript:
   centerOnCalifornia();
 
   var featureLayer = L.mapbox.featureLayer('/reservoir')
-  .addTo(map);
+    .addTo(map);
 
   featureLayer.on('layeradd', function(event) {
     event.layer.bindPopup(event.layer.feature.properties.name);
