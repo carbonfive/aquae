@@ -10,7 +10,7 @@
 # Data that is required by the application across all environments (i.e. reference data) should _not_ be included here.
 # That belongs in seeds.rb instead.
 
-def create_reservoir(code, name, capacity, current_supply, current_supply_captured_on, lat, lon)
+def create_reservoir(code, name, capacity, current_supply, current_supply_captured_on, lon, lat)
   reservoir = Reservoir.find_or_initialize_by(code: code)
   reservoir.name = name
   reservoir.capacity = capacity
