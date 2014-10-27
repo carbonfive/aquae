@@ -20,6 +20,7 @@ gem 'awesome_print'
 gem 'activerecord-postgis-adapter'
 gem 'rgeo-geojson'
 
+gem 'typhoeus'
 gem 'nokogiri'
 
 group :production, :acceptance do

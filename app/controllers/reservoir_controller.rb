@@ -7,7 +7,7 @@ class ReservoirController < ApplicationController
       factory.feature res.latlon,nil, { name: res.name,
                                         capacity: res.capacity,
                                         current_supply: res.current_supply,
-                                        percentage_full: Float(res.current_supply)/res.capacity,
+                                        percentage_full: res.current_supply.present? ? Float(res.current_supply)/res.capacity : nil,
                                         water_system: res.water_system.try(:name),
                                       }
     }
