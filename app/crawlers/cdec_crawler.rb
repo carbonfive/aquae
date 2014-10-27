@@ -76,7 +76,7 @@ class CDECCrawler
       longitude = doc.at_css('table:first tr:nth(4) td:nth(4)').text.strip[0..-3]
       latitude = doc.at_css('table:first tr:nth(4) td:nth(2)').text.strip[0..-3]
       puts "#{reservoir.code} - LON #{longitude} / LAT #{latitude}"
-      reservoir.update!(latlon: "POINT(#{longitude} #{latitude})")
+      reservoir.update!(lonlat: "POINT(#{longitude} #{latitude})")
     rescue
     end
   end

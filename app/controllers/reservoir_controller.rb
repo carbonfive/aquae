@@ -3,8 +3,8 @@ class ReservoirController < ApplicationController
 
   def index
     factory = RGeo::GeoJSON::EntityFactory.instance
-    features = Reservoir.where.not(latlon: nil).includes(:water_system).map { |res|
-      factory.feature res.latlon,nil, { name: res.name,
+    features = Reservoir.where.not(lonlat: nil).includes(:water_system).map { |res|
+      factory.feature res.lonlat,nil, { name: res.name,
                                         capacity: res.capacity,
                                         current_supply: res.current_supply,
                                         percentage_full: res.current_supply.present? ? Float(res.current_supply)/res.capacity : nil,

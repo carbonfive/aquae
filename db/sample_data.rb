@@ -16,7 +16,7 @@ def create_reservoir(code, name, capacity, current_supply, current_supply_captur
   reservoir.capacity = capacity
   reservoir.current_supply = current_supply
   reservoir.current_supply_captured_on = Date.parse(current_supply_captured_on) - 1.day
-  reservoir.latlon = "POINT(#{lon} #{lat})"
+  reservoir.lonlat = "POINT(#{lon} #{lat})"
   reservoir.save!
 end
 

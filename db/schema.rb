@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141022181420) do
+ActiveRecord::Schema.define(version: 20141027225006) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 20141022181420) do
     t.datetime "created_at",                                                                          null: false
     t.datetime "updated_at",                                                                          null: false
     t.integer  "water_system_id"
-    t.spatial  "latlon",                     limit: {:srid=>4326, :type=>"point", :geographic=>true}
+    t.spatial  "lonlat",                     limit: {:srid=>4326, :type=>"point", :geographic=>true}
     t.date     "current_supply_captured_on"
   end
 
