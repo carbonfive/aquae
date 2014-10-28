@@ -56,31 +56,9 @@ div#water-system-detail
 
 script id="water-system-detail-template" type="text/x-handlebars-template"
   h1.water-system-detail__name
-    | {{name}} Gets Its Water From
+    | The {{name}} Water System
   .water-system-detail__divider
   h2.water-system-detail__description
-    | Below is a list of water sources that {{name}}’s water comes from and their overall network supply.
-
-  h2
-    | Water Sources in {{name}}’s Network
-  p
-    | {{name}}’s water comes from the {{reservoir_names}} water sources. This chart shows each water source’s current supply vs. it’s full potential capacity.
-  #water-system-detail__reservoirs-chart.water-system-detail__reservoirs-chart
-  .water-system-detail__legend
-    .water-system-summary__legend-color-wrapper
-      .water-system-summary__legend-color.good
-    .water-system-summary__legend-label
-      | current supply
-      br
-      | available
-    .water-system-summary__legend-color-wrapper
-      .water-system-summary__legend-color.normal
-    .water-system-summary__legend-label
-      | full potential
-      br
-      | capacity
-
-
   .water-system-summary
     h2.water-system-summary__header
       | {{name}}’s Current Water Supply
@@ -119,6 +97,24 @@ script id="water-system-detail-template" type="text/x-handlebars-template"
         br
         | 81-100%
 
+    h2
+      | Water Sources in {{name}}’s Network
+    p
+      | {{name}}’s water comes from the {{reservoir_names}} water sources. This chart shows each water source’s current supply vs. it’s full potential capacity.
+    #water-system-detail__reservoirs-chart.water-system-detail__reservoirs-chart
+    .water-system-detail__legend
+      .water-system-summary__legend-color-wrapper
+        .water-system-summary__legend-color.good
+      .water-system-summary__legend-label
+        | current supply
+        br
+        | available
+      .water-system-summary__legend-color-wrapper
+        .water-system-summary__legend-color.normal
+      .water-system-summary__legend-label
+        | full potential
+        br
+        | capacity
 
 javascript:
   L.mapbox.accessToken = 'pk.eyJ1IjoiY2FyYm9uNSIsImEiOiJ6aV9uakxJIn0.ukQnv3tUrxQNlLb2KvktHw';
