@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141027225006) do
+ActiveRecord::Schema.define(version: 20141027232647) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,11 +22,14 @@ ActiveRecord::Schema.define(version: 20141027225006) do
     t.string   "code"
     t.integer  "capacity"
     t.integer  "current_supply"
-    t.datetime "created_at",                                                                          null: false
-    t.datetime "updated_at",                                                                          null: false
+    t.datetime "created_at",                                                                                                                                                  null: false
+    t.datetime "updated_at",                                                                                                                                                  null: false
     t.integer  "water_system_id"
-    t.spatial  "lonlat",                     limit: {:srid=>4326, :type=>"point", :geographic=>true}
+    t.spatial  "lonlat",                      limit: {:srid=>4326, :type=>"point", :geographic=>true}
     t.date     "current_supply_captured_on"
+    t.integer  "monthly_averages_start_year"
+    t.integer  "monthly_averages_end_year"
+    t.integer  "monthly_averages",                                                                     default: [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil],              array: true
   end
 
   add_index "reservoirs", ["water_system_id"], :name => "index_reservoirs_on_water_system_id"

@@ -3,21 +3,64 @@ require 'open-uri'
 
 class CDECCrawler
 
+  BLACKLISTED_CODES = %w( EDS SJT SCD )
+
+  # class ReservoirOverview
+  #
+  #   def initialize(body)
+  #     self.doc = Nokogiri::HTML(body)
+  #   end
+  #
+  #   def reservoirs()
+  #     body.css('.content_left_column table:first tr').map do |tr|
+  #       next unless tr.at_css('td a').present? # skip the header row
+  #
+  #       s = Struct.new(:code, :name, :capacity)
+  #       s.code = tr.at_css('td a').text.strip
+  #       s.name = tr.at_css('td:nth(2)').text.strip
+  #       s.capacity = tr.at_css('td:nth(5)').text.strip.gsub(',', '')
+  #       s
+  #     end
+  #   end
+  # end
+
   attr_accessor :hydra
 
-  def initialize(concurrency: 10)
+  def initialize(concurrency: 4)
+    # Typhoeus::Config.verbose = true
     self.hydra = Typhoeus::Hydra.new(max_concurrency: concurrency)
   end
 
   def crawl_general_reservoir_data()
-    index = Nokogiri::HTML(open('http://cdec.water.ca.gov/misc/resinfo.html'))
+    body = Nokogiri::HTML(open('http://cdec.water.ca.gov/misc/resinfo.html'))
 
-    index.css('.content_left_column table:first tr').each do |tr|
+    # page = ReservoirOverview.new(body)
+    #
+    # page.reservoirs.each do |r|
+    #   if BLACKLISTED_CODES.include? code
+    #     puts "#{code} - Blacklisted, skipping."
+    #     next
+    #   end
+    #
+    #   next unless r.code.present? && r.name.present? && r.capacity.present?
+    #
+    #   reservoir = Reservoir.find_or_initialize_by(code: r.code)
+    #   reservoir.name = r.name
+    #   reservoir.capacity = r.capacity
+    #   reservoir.save!
+    # end
+
+    body.css('.content_left_column table:first tr').each do |tr|
       next unless tr.at_css('td a').present? # skip the header row
 
       code = tr.at_css('td a').text.strip
       name = tr.at_css('td:nth(2)').text.strip
       capacity = tr.at_css('td:nth(5)').text.strip.gsub(',', '')
+
+      if BLACKLISTED_CODES.include? code
+        puts "#{code} - #{name} - #{capacity} - Blacklisted, skipping."
+        next
+      end
 
       puts "#{code} - #{name} - #{capacity}"
 
@@ -33,7 +76,12 @@ class CDECCrawler
   def update_reservoir_details(reservoir)
     request = Typhoeus::Request.new("http://cdec.water.ca.gov/cgi-progs/stationInfo?station_id=#{reservoir.code}", followlocation: true)
     request.on_complete do |response|
-      analyze_reservoir_details(reservoir, response.body)
+      begin
+        analyze_reservoir_details(reservoir, response.body)
+      rescue => e
+        puts "Error: Failed to process details for #{reservoir.code}."
+        raise e
+      end
     end
     hydra.queue request
   end
@@ -41,20 +89,35 @@ class CDECCrawler
   def update_reservoir_monthly_averages(reservoir)
     request = Typhoeus::Request.new("http://cdec.water.ca.gov/cgi-progs/profile?s=#{reservoir.code}&type=res", followlocation: true)
     request.on_complete do |response|
-      analyze_reservoir_monthly_averages(reservoir, response.body)
+      begin
+        analyze_reservoir_monthly_averages(reservoir, response.body)
+      rescue => e
+        puts "Error: Failed to process monthly averages for #{reservoir.code}."
+        raise e
+      end
     end
     hydra.queue request
   end
 
   def update_reservoir_current_storage(reservoir)
-    request = Typhoeus::Request.new("http://cdec.water.ca.gov/cgi-progs/queryDaily?s=#{reservoir.code}", followlocation: true) # daily
+    request = Typhoeus::Request.new("http://cdec.water.ca.gov/cgi-progs/queryDaily?s=#{reservoir.code}", followlocation: true)
     request.on_complete do |response|
       if contains_current_storage_data(response.body)
-        analyze_reservoir_current_storage(reservoir, response.body)
-      else
-        request = Typhoeus::Request.new("http://cdec.water.ca.gov/cgi-progs/queryMonthly?s=#{reservoir.code}", followlocation: true) # monthly
-        request.on_complete do |response|
+        begin
           analyze_reservoir_current_storage(reservoir, response.body)
+        rescue => e
+          puts "Error: Failed to process daily storage for #{reservoir.code}."
+          raise e
+        end
+      else
+        request = Typhoeus::Request.new("http://cdec.water.ca.gov/cgi-progs/queryMonthly?s=#{reservoir.code}", followlocation: true)
+        request.on_complete do |response|
+          begin
+            analyze_reservoir_current_storage(reservoir, response.body)
+          rescue => e
+            puts "Error: Failed to process monthly storage for #{reservoir.code}."
+            raise e
+          end
         end
         hydra.queue request
       end
@@ -82,6 +145,22 @@ class CDECCrawler
   end
 
   def analyze_reservoir_monthly_averages(reservoir, body)
+    doc = Nokogiri::HTML(body)
+
+    start_year = doc.at_css('.content_left_column table:first tr:nth(3) td:nth(4)').text
+    end_year   = doc.at_css('.content_left_column table:first tr:nth(3) td:nth(6)').text
+
+    averages = []
+    doc.css('.content_left_column table:nth(2) tr').each do |tr|
+      if tr.css('td').count == 2
+        averages <<  tr.at_css('td:nth(2)').text.gsub(/\D/, '')
+      end
+    end
+    averages.map! { |m| m == '' ? nil : m }
+
+    puts "#{reservoir.code} - #{averages} [#{start_year}-#{end_year}]"
+
+    reservoir.update!(monthly_averages_start_year: start_year, monthly_averages_end_year: end_year, monthly_averages: averages)
   end
 
   def analyze_reservoir_current_storage(reservoir, body)
@@ -165,10 +244,14 @@ class CDECCrawler
     # Fetch all reservoirs (code, name, total capacity) and create/update records for each one.
     crawl_general_reservoir_data
 
+    # Remove any reservoirs that have ben blacklisted (but added before they were blacklisted).
+    Reservoir.where(code: BLACKLISTED_CODES).destroy_all
+
     # For each persisted reservoir, update lat/lon, historical averages, and current status.
-    Reservoir.all.each do |reservoir|
+    Reservoir.where(code: %w(COY DNN FRM INP SVO CHV SCD QUL PAR)).each do |reservoir|
+      #Reservoir.all.each do |reservoir|
       update_reservoir_details(reservoir)
-      # update_reservoir_monthly_averages(reservoir)
+      update_reservoir_monthly_averages(reservoir)
       update_reservoir_current_storage(reservoir)
     end
 
