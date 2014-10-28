@@ -248,8 +248,8 @@ class CDECCrawler
     Reservoir.where(code: BLACKLISTED_CODES).destroy_all
 
     # For each persisted reservoir, update lat/lon, historical averages, and current status.
-    Reservoir.where(code: %w(COY DNN FRM INP SVO CHV SCD QUL PAR)).each do |reservoir|
-      #Reservoir.all.each do |reservoir|
+    # Reservoir.where(code: %w(COY DNN FRM INP SVO CHV SCD QUL PAR)).each do |reservoir|
+    Reservoir.all.each do |reservoir|
       update_reservoir_details(reservoir)
       update_reservoir_monthly_averages(reservoir)
       update_reservoir_current_storage(reservoir)
