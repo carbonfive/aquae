@@ -26,6 +26,7 @@ gem 'nokogiri'
 group :production, :acceptance do
   gem 'rails_stdout_logging'
   gem 'heroku_rails_deflate'
+  gem 'newrelic_rpm'
 end
 
 group :test do
