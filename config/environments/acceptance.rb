@@ -4,5 +4,5 @@ require Rails.root.join('config/environments/production')
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb and config/production.rb.
 
-  config.action_mailer.default_url_options = { host: 'mywater-acceptance.herokuapp.com' }
+  config.action_mailer.default_url_options = { host: 'aquae-acceptance.herokuapp.com' }
 end

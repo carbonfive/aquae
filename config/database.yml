@@ -7,14 +7,14 @@ development: &default
   postgis_extension:  postgis
   #schema_search_path: public, postgis
 
-  database: mywater_development
+  database: aquae_development
   username: postgres
   pool: 5
   timeout: 5000
 
 test:
   <<: *default
-  database: mywater_test
+  database: aquae_test
   min_messages: warning
 
 acceptance:

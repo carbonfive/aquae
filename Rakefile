@@ -4,7 +4,7 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Mywater::Application.load_tasks
+Aquae::Application.load_tasks
 
 # Spec is the default rake target.
 task(:default).clear

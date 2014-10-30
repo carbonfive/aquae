@@ -9,14 +9,14 @@ deployment:
     branch: development
     commands:
       - '[[ ! -s "$(git rev-parse --git-dir)/shallow" ]] || git fetch --unshallow'
-      - git push -f git@heroku.com:mywater-acceptance.git $CIRCLE_SHA1:master:
+      - git push -f git@heroku.com:aquae-acceptance.git $CIRCLE_SHA1:master:
           timeout: 300
-      - heroku run rake db:migrate db:seed --app mywater-acceptance
+      - heroku run rake db:migrate db:seed --app aquae-acceptance
 
   production:
     branch: master
     commands:
       - '[[ ! -s "$(git rev-parse --git-dir)/shallow" ]] || git fetch --unshallow'
-      - git push -f git@heroku.com:mywater.git $CIRCLE_SHA1:master:
+      - git push -f git@heroku.com:aquae.git $CIRCLE_SHA1:master:
           timeout: 300
-      - heroku run rake db:migrate db:seed --app mywater
+      - heroku run rake db:migrate db:seed --app aquae
