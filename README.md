@@ -1,8 +1,11 @@
 # Aquae
 
-...
+Aquae helps you understand where your water come sfrom and the health of our water systems.
 
-Generated with [Raygun](https://github.com/carbonfive/raygun).
+Reservoirs are at the lowest levels we've seen in more than a decade but it's hard to find out what it really means.
+Many people don't even know where their water comes from and it's not always easy to find out.
+
+We want to help answer important questions about water in an easy to understand manner.
 
 # Development
 
@@ -42,11 +45,10 @@ To run all Ruby and Javascript specs.
 
 ### Git
 
-* Branch ```development``` is auto-deployed to acceptance.
 * Branch ```master``` is auto-deployed to production.
-* Create feature branches off of ```development``` using the naming convention ```(features|chores|bugs)/a-brief-description-######```, where ###### is the tracker id.
-* Rebase your branch before merging into ```development``` to produce clean merge bubbles.
-* Retain merge commits for multi-commit branches when merging into ```development``` (e.g. ```git merge --no-ff branchname```).
+* Create feature branches off of ```master``` using the naming convention ```(features|chores|bugs)/a-brief-description-######```, where ###### is the tracker id.
+* Rebase your branch before merging into ```master``` to produce clean merge bubbles.
+* Retain merge commits for multi-commit branches when merging into ```master``` (e.g. ```git merge --no-ff branchname```).
 * Craft atomic commits that make sense on their own and can be easily cherry-picked or reverted if necessary.
 
 ### Code Style
@@ -66,14 +68,6 @@ end
 ````
 
 ## Additional/Optional Development Details
-
-### Code Coverage (local)
-
-Coverage for the ruby specs:
-
-    $ COVERAGE=true rspec
-
-Code coverage is reported to Code Climate on every CI build so there's a record of trending.
 
 ### Using Guard
 
@@ -99,7 +93,7 @@ Check out [circle.yml](circle.yml) and [bin/deploy.sh](bin/deploy.sh) for detail
 
 ### Hosting
 
-Acceptance and Production are hosted on Heroku under the _email@example.com_ account.
+Production is hosted on Heroku.
 
 ### Environment Variables
 
@@ -122,3 +116,4 @@ Several common features and operational parameters can be set using environment 
 
 * Heroku for hosting.
 * CircleCI for continuous integration and deployment.
+* Mapbox for custom mapping.
