@@ -4,7 +4,7 @@ html
     title Water Systems of California
     = stylesheet_link_tag    'application', media: 'all'
     = javascript_include_tag 'application'
-    script src="//use.typekit.net/mjr2asq.js"
+    script src='//use.typekit.net/mjr2asq.js'
     script try{Typekit.load();}catch(e){}
     = csrf_meta_tag
     meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'
@@ -28,13 +28,11 @@ html
                 - WaterSystem.all.each do |ws|
                   | <li><a>#{ws.name}</a></li>
 
-
-
-
     - flash.each do |name, msg|
       .alert.alert-dismissable class=alert_class(name)
         button.close type='button' data-dismiss='alert' aria-hidden='true' &times;
         =raw(msg)
+
     = yield
 
     - if ENV['GA_TRACKING_ID'].present?
